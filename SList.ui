@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SList</class>
+ <widget class="QWidget" name="SList">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1517</width>
+    <height>831</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#SList {
+background-color: rgb(0, 0, 34);
+}
+
+QLabel#Instructions {
+color: rgb(255, 255, 255);
+font: 24pt &quot;FreeSans&quot;;
+}
+
+QLabel#User_text {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#User_selected {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Label_error_message{
+color: rgb(255, 0, 0);
+font: 8pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Edit{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Filter{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Change{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Delete{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Create{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QTableView#List{
+color: rgb(255, 255, 255);
+font: 14pt &quot;FreeSans&quot;;
+border: 2px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+border-radius: 20px;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 20px
+}
+
+QPushButton#Button_Cancel{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton:hover#Button_Create{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Filter{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Delete{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Edit{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Cancel{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Change{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+
+QTableView:hover#List{
+border: 3px solid rgb(255, 255, 255);
+}</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>1491</width>
+     <height>811</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="Label_error_message">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>790</y>
+      <width>1201</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>8</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Instructions">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>20</y>
+      <width>351</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>24</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Nákupní Lístek - JV</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="User_text">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>101</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Uživatel:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="User_selected">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>50</y>
+      <width>341</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="List">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>1211</width>
+      <height>681</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <column>
+     <property name="text">
+      <string>Název produktu</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Cena (Kč)</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Datum nákupu</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Množství</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Jednotka</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Sleva</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Název obchodu</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Město</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Uživatel</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>ID</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Poznámky</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="Button_Cancel">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>710</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Konec</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Change">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>640</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Změnit uživatele</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Delete">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>300</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Smazat produkt</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Filter">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>90</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Filtrovat výběr</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Create">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>160</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Přidat nový produkt</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Edit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>230</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Upravit produkt</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
