@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>New_product</class>
+ <widget class="QWidget" name="New_product">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1181</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Nákupní Lístek JV</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#New_product {
+background-color: rgb(0, 0, 34);
+}
+
+QLabel#Instructions {
+color: rgb(255, 255, 255);
+font: 24pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Back{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Save_Back{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton#Button_Save_Next{
+color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 20px;
+font: 12pt &quot;FreeSans&quot;;
+}
+
+QPushButton:hover#Button_Back{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Save_Back{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QPushButton:hover#Button_Save_Next{
+border: 3px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+}
+
+QLabel#Text_name {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_price {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_date {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_amount {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_discount {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_unit {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_shop {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_city {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLabel#Text_comments {
+color: rgb(255, 255, 255);
+font: 16pt &quot;FreeSans&quot;;
+}
+
+QLineEdit#Product_amount, 
+QLineEdit#Product_city,
+QLineEdit#Product_comments,
+QLineEdit#Product_date,
+QLineEdit#Product_discount,
+QLineEdit#Product_name,
+QLineEdit#Product_price,
+QLineEdit#Product_shop,
+QLineEdit#Product_unit{
+color: rgb(255, 255, 255);
+font: 14pt &quot;FreeSans&quot;;
+border: 2px solid rgb(255, 255, 255);
+background-color: rgb(0, 0, 53);
+border-radius: 10px;
+padding-left: 20px;
+padding-right: 20px;
+}
+
+QLineEdit:hover#Product_amount, 
+QLineEdit:hover#Product_city,
+QLineEdit:hover#Product_comments,
+QLineEdit:hover#Product_date,
+QLineEdit:hover#Product_discount,
+QLineEdit:hover#Product_name,
+QLineEdit:hover#Product_price,
+QLineEdit:hover#Product_shop,
+QLineEdit:hover#Product_unit{
+border: 3px solid rgb(255, 255, 255);
+}
+
+QLabel#Message{
+color: rgb(255, 0, 0);
+font: 16pt &quot;FreeSans&quot;;
+}</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1171</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="Instructions">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>10</y>
+      <width>351</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>24</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Zadání nového produktu</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_name">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>70</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_name">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>70</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Název produktu</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Message">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>270</y>
+      <width>1091</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Save_Next">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>310</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Uložit a další</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Back">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>310</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Zavřít okno</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_price">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>110</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cena (1ks/Kč)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_date">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>190</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Datum (dd.mm.rrrr)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_amount">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>70</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Množství</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_unit">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>110</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Jednotka (ks,g,ml,cm,...)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_discount">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>150</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sleva (ano/ne)</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_Save_Back">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>310</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeSans</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Uložit a zpět</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_comments">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>230</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Poznámky (volitelné)</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_price">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>110</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_discount">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>150</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_amount">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>70</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_unit">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>110</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_shop">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>150</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_comments">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>230</y>
+      <width>891</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_city">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>190</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Město</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Text_shop">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>150</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Název obchodu</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_date">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>190</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Product_city">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>190</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

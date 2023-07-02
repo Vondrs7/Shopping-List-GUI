@@ -13,11 +13,10 @@ class NovaOsobaForm(QtWidgets.QWidget):
         super(NovaOsobaForm, self).__init__(**kwargs)
 
         # načtení okna
-        self.generated_class, self.base_class = uic.loadUiType("New_profile.ui") 
+        self.generated_class, self.base_class = uic.loadUiType("ui/New_profile.ui") 
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
 
         # tlačítka
         self.form.Button_Save_Continue.clicked.connect(lambda:self.save_continue())  # tlačítko pro uložení jména
@@ -43,17 +42,16 @@ class NovaOsobaForm(QtWidgets.QWidget):
         self.np = app.np
 
 # třída pro zobrazení a funkčnost úvodního okna s výběrem uživatele 
-class VyberUzivateleForm(QtWidgets.QMainWindow):
+class VyberUzivateleForm(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(VyberUzivateleForm, self).__init__(**kwargs)
 
         # načtení okna 
-        self.generated_class, self.base_class = uic.loadUiType("Users_menu.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Users_menu.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
 
         # tlačítka
         self.form.Button_Cancel.clicked.connect(lambda:sys.exit(app.exec()))  # tlačítko pro ukončení aplikace
@@ -63,12 +61,14 @@ class VyberUzivateleForm(QtWidgets.QMainWindow):
 
         self.widget.show() # zobrazení okna s výběrem uživatele
 
+
     # metoda pro správu výběru uživatele a zobrazením dalšího okna (nákupního seznamu) po kliknutí na tlačítko
     def vyber_uzivatele(self):
         if self.form.Users.currentRow() >= 0:
             self.vybrany_uzivatel = self.form.Users.currentRow() # načte do proměnné vybraného uživatele
-            self.sl.nacteni() # připraví data vybraného uživatele
-            self.sl.widget.show() # zobrazí další okno s nákupním seznamem
+            self.sl.nacteni()
+            self.cc.vypis_predvyber() # připraví data vybraného uživatele
+            self.cc.widget.show() # zobrazí další okno s nákupním seznamem
             self.widget.close() # zavře okno s výběrem uživatele
         else:
             self.form.Label_error_message.setText("Prosím vyberte uživatele.")  
@@ -127,6 +127,7 @@ class VyberUzivateleForm(QtWidgets.QMainWindow):
         self.fil = app.fil
         self.np = app.np
         self.dur = app.dur
+        self.cc = app.cc
 
 # třída pro zobrazení a funkčnost hlavního okna nákupního seznamu
 class ShoppingList(QtWidgets.QMainWindow):
@@ -135,11 +136,10 @@ class ShoppingList(QtWidgets.QMainWindow):
         super(ShoppingList, self).__init__(**kwargs)
 
         # načtení a zobrazení okna
-        self.generated_class, self.base_class = uic.loadUiType("SList.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/SList.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
 
         self.form.Button_Cancel.clicked.connect(lambda:sys.exit(app.exec()))  # tlačítko pro ukončení aplikace
         self.form.Button_Filter.clicked.connect(lambda:self.fil.widget.show())
@@ -147,25 +147,50 @@ class ShoppingList(QtWidgets.QMainWindow):
         self.form.Button_Create.clicked.connect(lambda:self.np.widget.show())
         self.form.Button_Delete.clicked.connect(lambda:self.dr.widget.show())
         self.form.Button_Edit.clicked.connect(lambda:self.zmena_produktu())
+        self.form.Button_Change_content.clicked.connect(lambda:self.zmena_zobrazeni())
 
-    # metoda načte a vypíše data pro vybraného uživatele
+    # metoda načte vybraného uživatele
     def nacteni(self):
+
         self.uzivatel_cislo = self.vuf.vybrany_uzivatel
         self.uzivatel = self.vuf.members[self.uzivatel_cislo]
         self.form.User_selected.setText(self.uzivatel)
         self.dat.main() # vytvoří databázi pokud neexistuje
 
-        # výpis dat do tabulky
-        self.vypis = self.dat.vypis(self.uzivatel) # podle zvoleného uživatele se do proménné uloží všechny jeho produkty
-        column = 0
-        try: # použité "try" pro případy, kdy je tabulak prázdná, aby nebyla chyba
-            self.form.List.setRowCount(len(self.vypis))
-            for items in self.vypis:
-                for item in items:
-                    self.form.List.setItem(0, column, QtWidgets.QTableWidgetItem(str(item)))
-                    column=column+1
-        except:
-            pass
+    # metoda načte data pro vybraného uživatele, podle výběru bud všechny, nebo jen specifický výběr podla data a obchodu
+    def vypis(self, zobraz_vsechny_polozky):
+
+        self.vypis_vse = self.dat.vypis(self.uzivatel) # podle zvoleného uživatele se do proménné uloží všechny jeho produkty   
+        if zobraz_vsechny_polozky:
+            # výpis dat do tabulky
+            column = 0
+            try: # použité "try" pro případy, kdy je tabulak prázdná, aby nebyla chyba
+                self.form.List.setRowCount(len(self.vypis_vse))
+                for items in self.vypis_vse:
+                    for item in items:
+                        self.form.List.setItem(0, column, QtWidgets.QTableWidgetItem(str(item)))
+                        column=column+1
+            except:
+                pass
+
+        elif not zobraz_vsechny_polozky:
+            try: # použité "try" pro případy, kdy je tabulak prázdná, aby nebyla chyba
+                self.form.List.setRowCount(len(self.cc.vypis_content))
+                row = -1
+                for items in self.cc.vypis_content:
+                    column = 0
+                    row=row+1
+                    for item in items:
+                        self.form.List.setItem(0, column, QtWidgets.QTableWidgetItem(str(item)))
+                        column=column+1
+            except:
+                pass
+
+    # metoda pro změnu zobrazení 
+    def zmena_zobrazeni(self):
+        self.cc.vypis_predvyber()
+        self.widget.close()
+        self.cc.widget.show()
 
     # metoda se zavolá v případech, kdy je potřeba si vytáhnout aktuálního uživatele
     def ulozeny_uzivatel(self):
@@ -181,7 +206,7 @@ class ShoppingList(QtWidgets.QMainWindow):
         self.dr.widget.close()
         if self.form.List.currentRow() >= 0:
             vybrany_produkt = self.form.List.currentRow() # nahraje se číslo řádku vybraného produktu
-            vypis_radek = self.vypis[vybrany_produkt] # z výpisu se nahraje část dat podle řádku
+            vypis_radek = self.vypis_vse[vybrany_produkt] # z výpisu se nahraje část dat podle řádku
             vypis_id = vypis_radek[9] # z požadovaných dat se vybere ID produktu
             self.dat.smazat(str(vypis_id))
             self.nacteni()
@@ -190,7 +215,7 @@ class ShoppingList(QtWidgets.QMainWindow):
     def zmena_produktu(self):
         if self.form.List.currentRow() >= 0:
             vybrany_produkt = self.form.List.currentRow() # nahraje se číslo řádku vybraného produktu
-            self.vypis_radek = self.vypis[vybrany_produkt] # z výpisu se nahraje část dat podle řádku
+            self.vypis_radek = self.vypis_vse[vybrany_produkt] # z výpisu se nahraje část dat podle řádku
             self.vypis_id = self.vypis_radek[9] # z požadovaných dat se vybere ID produktu
             self.cp.widget.show()
             self.cp.vypis_produktu()   
@@ -204,20 +229,20 @@ class ShoppingList(QtWidgets.QMainWindow):
         self.np = app.np
         self.dr = app.dr
         self.cp = app.cp
+        self.cc = app.cc
 
         self.dat = app.dat
 
 # třída pro okno filtru v hlavním okně nákupního lístku
-class Filter(QtWidgets.QMainWindow):
+class Filter(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(Filter, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("Filter_setup.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Filter_setup.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
 
         self.form.Button_Back.clicked.connect(lambda:self.fil.widget.close())  # tlačítko pro ukončení aplikace
         self.form.Button_Search.clicked.connect(lambda:self.filtr())
@@ -283,16 +308,15 @@ class Filter(QtWidgets.QMainWindow):
         self.dat = app.dat
 
 # třída pro zadání nového produkltu v hlavním okně nákupního lístku
-class NewProduct(QtWidgets.QMainWindow):
+class NewProduct(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(NewProduct, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("New_product.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/New_product.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
 
         now = datetime.now()
         self.form.Product_date.setText(f"{now.day}.{now.month}.{now.year}")
@@ -381,16 +405,15 @@ class NewProduct(QtWidgets.QMainWindow):
         self.dat = app.dat
 
 # okno pro opětovné zeptání se, zda má být produkt smazán
-class DeleteReally(QtWidgets.QMainWindow):
+class DeleteReally(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(DeleteReally, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("Delete_really.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Delete_really.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
     
         self.form.Button_Back.clicked.connect(lambda:self.widget.close())
         self.form.Button_Delete.clicked.connect(lambda:self.sl.smazat())
@@ -399,16 +422,15 @@ class DeleteReally(QtWidgets.QMainWindow):
         self.sl = app.sl
 
 # okno pro úpravu/změnu produktu
-class ChangeProduct(QtWidgets.QMainWindow):
+class ChangeProduct(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(ChangeProduct, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("Change_product.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Change_product.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
     
         self.form.Button_Back.clicked.connect(lambda:self.widget.close())
         self.form.Button_Save_Change.clicked.connect(lambda: self.er.widget.show())
@@ -461,16 +483,15 @@ class ChangeProduct(QtWidgets.QMainWindow):
         self.er = app.er
 
 # okno pro opětovné zeptání se, zda má být produkt upraven
-class EditReally(QtWidgets.QMainWindow):
+class EditReally(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(EditReally, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("Edit_really.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Edit_really.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
     
         self.form.Button_Back.clicked.connect(lambda:self.widget.close())
         self.form.Button_Edit.clicked.connect(lambda:self.cp.uprav(self.sl.vypis_id))
@@ -480,22 +501,85 @@ class EditReally(QtWidgets.QMainWindow):
         self.sl = app.sl
 
 # okno pro opětovné zeptání se, zda má být uživatel smazán
-class DeleteUserReally(QtWidgets.QMainWindow):
+class DeleteUserReally(QtWidgets.QWidget):
 
     def __init__(self, **kwargs):
         super(DeleteUserReally, self).__init__(**kwargs)
 
-        self.generated_class, self.base_class = uic.loadUiType("Delete_user_really.ui")
+        self.generated_class, self.base_class = uic.loadUiType("ui/Delete_user_really.ui")
         self.widget = self.base_class()
         self.form = self.generated_class()
         self.form.setupUi(self.widget)
-        self.setWindowTitle("Nákupní Lístek JV")
     
         self.form.Button_Back.clicked.connect(lambda:self.widget.close())
         self.form.Button_Delete.clicked.connect(lambda:self.vuf.odebrat_uzivatele())
 
     def setup(self):
         self.vuf = app.vuf
+
+# okno pro výběr obsahu k zobrazení
+class ChooseContent(QtWidgets.QWidget):
+
+    def __init__(self, **kwargs):
+        super(ChooseContent, self).__init__(**kwargs)
+
+        self.generated_class, self.base_class = uic.loadUiType("ui/Choose_content.ui")
+        self.widget = self.base_class()
+        self.form = self.generated_class()
+        self.form.setupUi(self.widget)
+    
+        self.form.Button_back.clicked.connect(lambda:self.zmena_uzivatele())
+        self.form.Button_cancel.clicked.connect(lambda:sys.exit(app.exec()))
+        self.form.Button_choose.clicked.connect(lambda:self.zobrazit_vyber())
+        self.form.Button_show_all.clicked.connect(lambda:self.zobrazit_vse())
+
+    def vypis_predvyber(self):
+        self.uzivatel = self.sl.ulozeny_uzivatel() # načte si zvoleného uživatele do proměnné       
+        
+        # výpis dat do tabulky
+        self.vypis_content = self.dat.vypis_datum_predvyber(self.uzivatel) # podle zvoleného uživatele se do proménné uloží všechny jeho produkty
+        self.zobraz_vsechny_polozky = True
+
+        try: # použité "try" pro případy, kdy je tabulak prázdná, aby nebyla chyba
+            self.form.Content_list.setRowCount(len(self.vypis_content))
+            row = -1
+            for items in self.vypis_content:
+                column = 0
+                row=row+1
+                for item in items:
+                    self.form.Content_list.setItem( row, column, QtWidgets.QTableWidgetItem(str(item)))
+                    column=column+1
+        except:
+            pass
+
+    def setup(self):
+        self.vuf = app.vuf
+        self.sl = app.sl
+        self.dat = app.dat
+
+    # metoda pro změnu uživatele - vrátí okno s výběrem uživatele
+    def zmena_uzivatele(self):
+        self.vuf.widget.show()
+        self.widget.close()
+
+    # metoda zobrazí všechen nákup uživatele (všechny datumy, položky, obchody,...)
+    def zobrazit_vse(self):
+        self.zobraz_vsechny_polozky = True
+        self.sl.vypis(self.zobraz_vsechny_polozky)
+        self.widget.close()
+        self.sl.widget.show()
+
+    # metoda zobrazí jeden konkrétní vybraný nákup podle data, obchodu a města - výběr proběhne podle ID nákupu
+    def zobrazit_vyber(self):
+       self.zobraz_vsechny_polozky = False
+       if self.form.Content_list.currentRow() >= 0:
+            vybrany_produkt = 0
+            vybrany_produkt = self.form.Content_list.currentRow() # nahraje se číslo řádku vybraného produktu
+            self.vypis_radek = self.vypis_content[vybrany_produkt] # z výpisu se nahraje část dat podle řádku
+            self.vypis_content = self.dat.vypis_datum_vyber(self.uzivatel, self.vypis_radek[0], self.vypis_radek[1], self.vypis_radek[2])
+            self.sl.vypis(self.zobraz_vsechny_polozky)
+            self.widget.close()
+            self.sl.widget.show()
 
 # třída pro logickou vrstvu aplikace
 # na začátku vyvolá načtzení načtení uživatelů z případného (existujícího) souboru scv
@@ -512,6 +596,7 @@ class App(QtWidgets.QApplication):
         self.cp = ChangeProduct()
         self.er = EditReally()
         self.dur = DeleteUserReally()
+        self.cc = ChooseContent()
 
         self.dat = Database()
 
@@ -524,7 +609,8 @@ class App(QtWidgets.QApplication):
         self.dr.setup()
         self.cp.setup()
         self.er.setup()
-        self.dur.setup()      
+        self.dur.setup()
+        self.cc.setup()      
 
         self.vuf.nacteni_uzivatelu() # načte uživatele ze souboru scv
         self.vuf.vypis_uzivatelu() # vypíše uživatele do tabulky widgetu

@@ -50,9 +50,29 @@ class Database():
 
         cur.execute('SELECT item_name, item_price, date, amount, unit, discount, shop_name, shop_city, user, item_id, comments FROM Data WHERE user = (?)',(uzivatel,))
         return cur.fetchall()
+
+    # metoda pro výpis konkrétního nákupu vybraného v tabulce předvýběru
+    def vypis_datum_predvyber(self, uzivatel):
+        conn = None
+        lists = "lists.db" 
+        conn = self.pripojeni(lists)   
+        cur = conn.cursor()
+
+        cur.execute('SELECT date, shop_name, shop_city, item_id FROM Data WHERE user = (?)',(uzivatel,))
+        return cur.fetchall()
+    
+    # metoda pro výpis konkrétního nákupu vybraného v tabulce podle data, města a obchodu
+    def vypis_datum_vyber(self, uzivatel, datum, obchod, mesto):
+        conn = None
+        lists = "lists.db" 
+        conn = self.pripojeni(lists)   
+        cur = conn.cursor()
+
+        cur.execute('SELECT item_name, item_price, date, amount, unit, discount, shop_name, shop_city, user, item_id, comments FROM Data WHERE user = (?) AND date = (?) AND shop_name = (?) AND shop_city = (?)',(uzivatel, datum, obchod, mesto))
+        return cur.fetchall()
     
     # metoda pro filtrování dat z tabulky
-    def filtr(self,uzivatel, nazev, cena, datum, mnozstvi, jednotka, sleva, obchod, mesto, komentar):
+    def filtr(self, uzivatel, nazev, cena, datum, mnozstvi, jednotka, sleva, obchod, mesto, komentar):
         conn = None
         lists = "lists.db" 
         conn = self.pripojeni(lists)   
